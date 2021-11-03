@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
 
-export interface IDolarPriceToday {
+export interface IDolarPriceHistory {
    platforms: [
       {
          platform_id: string;
@@ -11,7 +11,7 @@ export interface IDolarPriceToday {
    ]
 }
 
-const modelSchema = new Schema<IDolarPriceToday>({
+const modelSchema = new Schema<IDolarPriceHistory>({
    platforms: [
       {
          platform_id: {
@@ -30,4 +30,4 @@ const modelSchema = new Schema<IDolarPriceToday>({
    ]
 }, { timestamps: true });
 
-export default model('DolarPriceToday', modelSchema);
+export default model('DolarPriceHistory', modelSchema);

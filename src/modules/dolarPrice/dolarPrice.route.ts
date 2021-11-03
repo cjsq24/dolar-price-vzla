@@ -3,8 +3,7 @@ import controller from './dolarPrice.controller';
 
 const router = Router();
 
-router.get('/get', controller.get);
+router.get('/get-actual-price', controller.getActualPrice);
 router.post('/create', controller.create);
-router.get('/testing-scraping', controller.testingScraping);
 
 export default router;
