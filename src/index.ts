@@ -7,6 +7,7 @@ import 'dotenv/config';
 
 import routes from './modules/routes';
 import dbConfig from './dbConfig';
+import './modules/cronJob/cronJob';
 
 const app = express();
 const server = http.createServer(app);
