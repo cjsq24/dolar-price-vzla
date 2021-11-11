@@ -5,8 +5,6 @@ import { Platform, IPlatform, DolarPriceToday, DolarPriceHistory } from '../mode
 
 interface IDolarPrice {
    platform_id: string;
-   name: string;
-   keyname: string;
    price: string;
 }
 
@@ -19,8 +17,10 @@ interface IController {
 const DolarPriceController: IController = {
    getActualPrice: (req: Request, res: Response): void => {
       Cont.tryCatch(res, async () => {
-         const result = await DolarPriceToday.findOne().sort({ createdAt: -1 });
+         const result = await (await DolarPriceToday.findOne().sort({ createdAt: -1 }));
+
          if (result) {
+            result.populate('platforms.platform_id');
             res.json(Cont.success(result));
          } else {
             res.status(400).json(Cont.error('dolarPriceGetFailed'));
@@ -49,9 +49,7 @@ const DolarPriceController: IController = {
                   if (plat.keyname === ele.keyname) {
                      dolarPrice.push({
                         platform_id: plat._id,
-                        name: plat.name,
-                        keyname: plat.keyname,
-                        price: ele.price,
+                        price: ele.price
                      });
                   }
                });
@@ -94,9 +92,7 @@ export const scrapingPriceAndInsert = async (type: 'today' | 'history'): Promise
                if (plat.keyname === ele.keyname) {
                   dolarPrice.push({
                      platform_id: plat._id,
-                     name: plat.name,
-                     keyname: plat.keyname,
-                     price: ele.price,
+                     price: ele.price
                   });
                }
             });

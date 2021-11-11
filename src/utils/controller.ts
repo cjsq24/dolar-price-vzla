@@ -23,7 +23,7 @@ class Controller implements IClass {
       try {
          await callBack();
       } catch (error) {
-         /* console.log(this) */
+         console.log(error);
          res.status(400).json(this.error('serverError'));
          return;
       }
