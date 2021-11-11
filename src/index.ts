@@ -2,6 +2,7 @@ import http from 'http';
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
+import path from 'path';
 //Para manejar las variables de entorno
 import 'dotenv/config';
 
@@ -20,6 +21,7 @@ app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use('/api', routes);
+app.use('/public',express.static(path.join(__dirname, './images')));
 
 app.get('/', (req, res) => {
    res.send('Backend de dolar-price');
