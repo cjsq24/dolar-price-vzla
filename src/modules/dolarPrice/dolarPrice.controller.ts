@@ -17,10 +17,11 @@ interface IController {
 const DolarPriceController: IController = {
    getActualPrice: (req: Request, res: Response): void => {
       Cont.tryCatch(res, async () => {
-         const result = await (await DolarPriceToday.findOne().sort({ createdAt: -1 }));
+         const result = await DolarPriceToday.findOne().sort({ createdAt: -1 });
 
          if (result) {
-            result.populate('platforms.platform_id');
+            /* await result.populate('platforms.platform_id'); */
+            
             res.json(Cont.success(result));
          } else {
             res.status(400).json(Cont.error('dolarPriceGetFailed'));
