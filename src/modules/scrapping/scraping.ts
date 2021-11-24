@@ -22,7 +22,7 @@ class Scraping implements IScrapingClass {
                            .split('</h6>')[0];
             const price = ele.split('<p class="precio" itemprop="price">')[1]
                            .split('</p>')[0];
-            dolarPrice.push({ keyname, price });
+            dolarPrice.push({ keyname: keyname.toLowerCase(), price: price.replace(',', '.') });
          }
       })
       return dolarPrice;

@@ -1,7 +1,4 @@
 import { Schema, model } from 'mongoose';
-import moment from 'moment-timezone';
-
-const venezuelaDate = moment.tz(Date.now(), 'America/Caracas');
 
 export interface IDolarPriceToday {
    platforms: [
@@ -24,7 +21,7 @@ const modelSchema = new Schema<IDolarPriceToday>({
          }
       }
    ],
-   created_at: { type: Date, default: venezuelaDate }
+   created_at: { type: Date }
 });
 
-export default model('DolarPriceToday', modelSchema);
+export default model<IDolarPriceToday>('DolarPriceToday', modelSchema);

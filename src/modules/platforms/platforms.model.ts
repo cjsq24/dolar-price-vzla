@@ -14,4 +14,4 @@ const modelSchema = new Schema<IPlatform>({
    status: { type: String, default: '1', enum: ['1', '0'] },
 }, { timestamps: true });
 
-export default model('Platform', modelSchema);
+export default model<IPlatform>('Platform', modelSchema);
