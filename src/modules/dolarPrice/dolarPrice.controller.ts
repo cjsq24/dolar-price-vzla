@@ -44,12 +44,15 @@ const DolarPriceController: IController = {
             //Seteamos un arreglo nuevo con su interface
             //Extraemos la última actualización de precio
             let dolarPriceToday: IDolarTodayFull = result.length === 2 && JSON.parse(JSON.stringify(result[0]));
+            //console.log(JSON.stringify(dolarPriceToday, null, 3));
             if (dolarPriceToday) {
                //Almacenamos el precio anterior en un nuevo objeto, para calcular la fluctuación
                let previousPrice = {};
                result[1].platforms.map(({ platform_id: plat, price }) => {
-                  previousPrice[plat._id.toString()] = price;
-               })
+                  if (plat) {
+                     previousPrice[plat._id.toString()] = price;
+                  }
+               });
 
                //Calculamos la fluctuación
                dolarPriceToday?.platforms.map(({ platform_id: plat, price }, i) => {
@@ -60,10 +63,11 @@ const DolarPriceController: IController = {
                   const fluctuationPercent = ((fluctuationBS * 100) / newPrice).toFixed(2);
                   dolarPriceToday.platforms[i].fluctuationBS = fluctuationBS.toFixed(2);
                   dolarPriceToday.platforms[i].fluctuationPercent = fluctuationPercent;
-               })
+               });
             }
             res.json(Cont.success(dolarPriceToday));
          } else {
+            console.log("Error");
             res.status(400).json(Cont.error('dolarPriceGetFailed'));
          }
       });
