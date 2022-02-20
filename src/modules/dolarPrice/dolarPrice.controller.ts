@@ -19,8 +19,8 @@ interface IDolarTodayFull {
          image: string;
       };
       price: string;
-      fluctuationBS: string
-      fluctuationPercent: string;
+      fluctuation_bs: string
+      fluctuation_percent: string;
    }];
    created_at: string;
 }
@@ -39,13 +39,13 @@ const DolarPriceController: IController = {
             .sort({ _id: -1 })
             .limit(2)
             .populate('platforms.platform_id');
-                                             
+
          if (result) {
             //Seteamos un arreglo nuevo con su interface
             //Extraemos la última actualización de precio
-            let dolarPriceToday: IDolarTodayFull = result.length === 2 && JSON.parse(JSON.stringify(result[0]));
-            //console.log(JSON.stringify(dolarPriceToday, null, 3));
-            if (dolarPriceToday) {
+            //let dolarPriceToday: IDolarTodayFull = result.length === 2 && JSON.parse(JSON.stringify(result[0]));
+            let dolarPriceToday: IDolarTodayFull = JSON.parse(JSON.stringify(result[0]));
+            if (dolarPriceToday && result[1]) {
                //Almacenamos el precio anterior en un nuevo objeto, para calcular la fluctuación
                let previousPrice = {};
                result[1].platforms.map(({ platform_id: plat, price }) => {
@@ -55,14 +55,19 @@ const DolarPriceController: IController = {
                });
 
                //Calculamos la fluctuación
-               dolarPriceToday?.platforms.map(({ platform_id: plat, price }, i) => {
+               dolarPriceToday.platforms.map(({ platform_id: plat, price }, i) => {
                   const oldPrice: number = parseFloat(previousPrice[plat._id]) || 0;
                   const newPrice = parseFloat(price);
 
-                  const fluctuationBS = newPrice - oldPrice;
-                  const fluctuationPercent = ((fluctuationBS * 100) / newPrice).toFixed(2);
-                  dolarPriceToday.platforms[i].fluctuationBS = fluctuationBS.toFixed(2);
-                  dolarPriceToday.platforms[i].fluctuationPercent = fluctuationPercent;
+                  const fluctuation_bs = newPrice - oldPrice;
+                  const fluctuation_percent = ((fluctuation_bs * 100) / newPrice).toFixed(2);
+                  dolarPriceToday.platforms[i].fluctuation_bs = fluctuation_bs.toFixed(2);
+                  dolarPriceToday.platforms[i].fluctuation_percent = fluctuation_percent;
+               });
+            } else {
+               dolarPriceToday.platforms.forEach((element) => {
+                  element.fluctuation_bs = '0.00';
+                  element.fluctuation_percent = '0.00';
                });
             }
             res.json(Cont.success(dolarPriceToday));
