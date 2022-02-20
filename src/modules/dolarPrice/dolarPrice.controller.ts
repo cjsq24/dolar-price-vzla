@@ -3,9 +3,10 @@ import Cont from '../../utils/controller';
 import Scraping from '../scrapping/scraping';
 import { Platform, IPlatform, DolarPriceToday, DolarPriceHistory } from '../models';
 import moment from 'moment-timezone';
+import { Types } from 'mongoose';
 
 interface IDolarPrice {
-   platform_id: string;
+   platform_id: string | Types.ObjectId;
    price: string;
 }
 
