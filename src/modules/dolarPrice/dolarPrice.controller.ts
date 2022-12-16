@@ -49,7 +49,7 @@ const DolarPriceController: IController = {
         .limit(2)
         .populate("platforms.platform_id");
 
-      /* if (result) {
+      if (result) {
         //Seteamos un arreglo nuevo con su interface
         //Extraemos la última actualización de precio
         //let dolarPriceToday: IDolarTodayFull = result.length === 2 && JSON.parse(JSON.stringify(result[0]));
@@ -90,7 +90,7 @@ const DolarPriceController: IController = {
       } else {
         console.log("Error");
         res.status(400).json(Cont.error("dolarPriceGetFailed"));
-      } */
+      }
     });
   },
 

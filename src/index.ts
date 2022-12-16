@@ -32,6 +32,5 @@ app.get("/", (req, res) => {
 
 server.listen(process.env.PORT || 4000, () => {
   console.log(`Server on port ${process.env.PORT || 4000}`);
-  console.log("hi", path.join(__dirname, "./images"));
   dbConfig();
 });
