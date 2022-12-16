@@ -2,7 +2,8 @@ import cron from "node-cron";
 import { scrapingPriceAndInsert } from "../dolarPrice/dolarPrice.controller";
 
 cron.schedule(
-  "1-40/2 9,13 * * *",
+  //"1-40/2 9,13 * * *",
+  "40 9,13 * * *",
   async () => {
     console.log("Dolar Price 9-1");
     const result: boolean = await scrapingPriceAndInsert("today");

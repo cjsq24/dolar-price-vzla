@@ -125,7 +125,8 @@ export const scrapingPriceAndInsert = async (
     const currentDate = new Date();
 
     const diffHours = getHoursDiff(lastDate, currentDate);
-    if (diffHours > 1) {
+    //if (diffHours > 1) {
+    if (1 === 1) {
       const resultScraping = await Scraping.getDolarPrice();
       const platforms = await Platform.find();
 
