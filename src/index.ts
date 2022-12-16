@@ -11,6 +11,8 @@ import routes from "./modules/routes";
 import dbConfig from "./dbConfig";
 import "./modules/cronJob/cronJob";
 
+process.env.TZ = "America/Caracas";
+
 const app = express();
 const server = http.createServer(app);
 
